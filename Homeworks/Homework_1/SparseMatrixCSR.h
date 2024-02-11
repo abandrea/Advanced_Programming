@@ -2,10 +2,10 @@
 #include <vector>
 #include <iostream>
 #include <stdexcept>
+#include <algorithm>
 
 template <typename T>
-class SparseMatrixCSR : public SparseMatrixBase<T> // Inherit from the base class
-{
+class SparseMatrixCSR : public SparseMatrixBase<T> {
 private:
     std::vector<T> values;     // Non-zero values
     std::vector<int> columns;  // Column indices of non-zero values
@@ -30,7 +30,7 @@ public:
     }
 
     T readElement(int row, int col) const override {
-        if (row < 0 || row >= numRows || col < 0 || col >= numCols) { // Check if the indices are within bounds
+        if (row < 0 || row >= numRows || col < 0 || col >= numCols) {
             throw std::out_of_range("Indices are out of bounds");
         }
         for (int i = row_idx[row]; i < row_idx[row + 1]; ++i) {
@@ -41,30 +41,23 @@ public:
         return static_cast<T>(0); // Return zero for non-existent elements
     }
 
-    template <typename T>
-
-    void SparseMatrixCSR<T>::writeElement(int row, int col, T value) {
+    void writeElement(int row, int col, T value) override {
         if (row < 0 || row >= numRows || col < 0 || col >= numCols) {
             throw std::out_of_range("Indices are out of bounds");
         }
-
-        // Find the position in the row
         auto start = row_idx[row];
         auto end = row_idx[row + 1];
         auto it = std::find_if(columns.begin() + start, columns.begin() + end, 
-                           [&](int c) { return c == col; });
+                               [&](int c) { return c == col; });
 
         if (it != columns.begin() + end) {
-            // Element already exists, update the value
             auto index = std::distance(columns.begin(), it);
             values[index] = value;
         } else {
-            // Element does not exist, insert new value
             auto index = std::distance(columns.begin(), it);
             columns.insert(it, col);
             values.insert(values.begin() + index, value);
 
-            // Update row indices
             for (int i = row + 1; i <= numRows; ++i) {
                 row_idx[i]++;
             }
@@ -72,7 +65,7 @@ public:
     }
 
     std::vector<T> matrixVectorProduct(const std::vector<T>& vec) const override {
-        if (vec.size() != static_cast<size_t>(numCols)) { // Check if the vector size matches the number of columns
+        if (vec.size() != static_cast<size_t>(numCols)) {
             throw std::invalid_argument("Vector size must match the number of columns");
         }
         std::vector<T> result(numRows, 0);
@@ -99,9 +92,8 @@ public:
     }
 
     T& operator()(int row, int col) override {
-        // Implementation here for write access
-        return values[row_idx[row] + col];
-    } 
+        // This will be complex, as it needs to handle writing to both existing and new elements
+    }
 
     std::vector<T> operator*(const std::vector<T>& vec) const override {
         return matrixVectorProduct(vec);
