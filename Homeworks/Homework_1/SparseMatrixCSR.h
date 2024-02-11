@@ -41,9 +41,35 @@ public:
         return static_cast<T>(0); // Return zero for non-existent elements
     }
 
-    // void writeElement(int row, int col, T value) override {
-    //     // Implementation here, consider handling new non-zero values
-    // } // not implemented 
+    template <typename T>
+
+    void SparseMatrixCSR<T>::writeElement(int row, int col, T value) {
+        if (row < 0 || row >= numRows || col < 0 || col >= numCols) {
+            throw std::out_of_range("Indices are out of bounds");
+        }
+
+        // Find the position in the row
+        auto start = row_idx[row];
+        auto end = row_idx[row + 1];
+        auto it = std::find_if(columns.begin() + start, columns.begin() + end, 
+                           [&](int c) { return c == col; });
+
+        if (it != columns.begin() + end) {
+            // Element already exists, update the value
+            auto index = std::distance(columns.begin(), it);
+            values[index] = value;
+        } else {
+            // Element does not exist, insert new value
+            auto index = std::distance(columns.begin(), it);
+            columns.insert(it, col);
+            values.insert(values.begin() + index, value);
+
+            // Update row indices
+            for (int i = row + 1; i <= numRows; ++i) {
+                row_idx[i]++;
+            }
+        }
+    }
 
     std::vector<T> matrixVectorProduct(const std::vector<T>& vec) const override {
         if (vec.size() != static_cast<size_t>(numCols)) { // Check if the vector size matches the number of columns
@@ -72,9 +98,10 @@ public:
         return readElement(row, col);
     }
 
-    // T& operator()(int row, int col) override {
-    //     // Implementation here for write access
-    // } // non implemented 
+    T& operator()(int row, int col) override {
+        // Implementation here for write access
+        return values[row_idx[row] + col];
+    } 
 
     std::vector<T> operator*(const std::vector<T>& vec) const override {
         return matrixVectorProduct(vec);
