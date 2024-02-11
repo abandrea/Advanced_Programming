@@ -1,3 +1,7 @@
+#ifndef SPARSEMATRIXBASE_H
+#define SPARSEMATRIXBASE_H
+
+
 #include <vector>
 #include <iostream>
 
@@ -25,3 +29,5 @@ public:
     // Additional utilities (optional)
     // at the moment, we don't need any additional utilities
 };
+
+#endif // SPARSEMATRIXBASE_H

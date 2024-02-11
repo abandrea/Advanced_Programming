@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "__debug": "cpp",
+        "atomic": "cpp",
+        "fstream": "cpp",
+        "initializer_list": "cpp",
+        "vector": "cpp",
+        "random": "cpp",
+        "type_traits": "cpp"
+    }
+}

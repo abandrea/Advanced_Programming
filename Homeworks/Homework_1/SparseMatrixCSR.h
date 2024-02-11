@@ -1,3 +1,7 @@
+#ifndef SPARSEMATRIXCSR_H
+#define SPARSEMATRIXCSR_H
+
+
 #include "SparseMatrixBase.h"
 #include <vector>
 #include <iostream>
@@ -86,13 +90,23 @@ public:
         }
     }
 
-    // Operator overloading
-    T operator()(int row, int col) const override {
-        return readElement(row, col);
+     operator()(int row, int col) const override {
+    if (row < 0 || row >= numRows || col < 0 || col >= numCols) {
+        throw std::out_of_range("Indices are out of bounds");
+    }
+    for (int i = row_idx[row]; i < row_idx[row + 1]; ++i) {
+        if (columns[i] == col) {
+            return values[i];
+        }
+    }
+    throw std::out_of_range("Element not found");
     }
 
     T& operator()(int row, int col) override {
-        // This will be complex, as it needs to handle writing to both existing and new elements
+    // This method needs to handle updates to existing elements and adding new elements
+    // This can be complex in the CSR format and depends on how you want to handle it
+    // For a simple version, you could throw an exception for attempts to add new elements
+    throw std::runtime_error("Adding new elements not supported in this implementation");
     }
 
     std::vector<T> operator*(const std::vector<T>& vec) const override {
@@ -102,3 +116,5 @@ public:
     // Additional utilities (optional)
     // ...
 };
+
+#endif // SPARSEMATRIXCSR_H
