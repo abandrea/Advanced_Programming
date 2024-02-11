@@ -4,7 +4,8 @@
 #include <stdexcept>
 
 template <typename T>
-class SparseMatrixCSR : public SparseMatrixBase<T> {
+class SparseMatrixCSR : public SparseMatrixBase<T> // Inherit from the base class
+{
 private:
     std::vector<T> values;     // Non-zero values
     std::vector<int> columns;  // Column indices of non-zero values
