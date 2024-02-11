@@ -13,3 +13,5 @@ The homework assignment is about implementing a sparse matrix class in C++. It i
 - SparseMatrixCSR.h and SparseMatrixCSR.cpp: Class declaration and definition for CSR format.
 - main.cpp: Main program for testing and demonstrating functionality.
 - Optional: Utilities.h and Utilities.cpp for additional helper functions or classes.
+
+## Abstract Base Class (SparseMatrixBase):
