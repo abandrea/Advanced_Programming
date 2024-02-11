@@ -90,7 +90,7 @@ public:
         }
     }
 
-     operator()(int row, int col) const override {
+    T operator()(int row, int col) const override {
     if (row < 0 || row >= numRows || col < 0 || col >= numCols) {
         throw std::out_of_range("Indices are out of bounds");
     }

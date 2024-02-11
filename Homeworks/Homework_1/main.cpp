@@ -1,6 +1,6 @@
 #include "SparseMatrixBase.h"
 #include "SparseMatrixCOO.h"
-#include "SparseMatrixCSR.h"
+//#include "SparseMatrixCSR.h"
 #include <iostream>
 #include <vector>
 
@@ -21,25 +21,25 @@ int main() {
 
 
     // Test 1: Sum of each row
-    // for (int i = 0; i < matrixCSR.getNumberOfRows(); ++i) {
-    //     double sum = 0;
-    //     for (int j = 0; j < matrixCSR.getNumberOfColumns(); ++j) {
-    //         sum += matrixCSR.readElement(i, j);
-    //     }
-    //     std::cout << "Sum of row " << i << ": " << sum << std::endl;
-    // }
+     for (int i = 0; i < matrixCOO.getNumberOfRows(); ++i) {
+         double sum = 0;
+         for (int j = 0; j < matrixCOO.getNumberOfColumns(); ++j) {
+             sum += matrixCOO.readElement(i, j);
+         }
+         std::cout << "Sum of row " << i << ": " << sum << std::endl;
+     }
 
-    // Test 2: Multiplying with canonical basis vector
-    // for (int i = 0; i < matrixCSR.getNumberOfColumns(); ++i) {
-    //     std::vector<double> basisVector(matrixCSR.getNumberOfColumns(), 0);
-    //     basisVector[i] = 1; // Creating the i-th canonical basis vector
-    //     std::vector<double> column = matrixCSR.matrixVectorProduct(basisVector);
-    //     std::cout << "Column " << i << ": ";
-    //     for (auto val : column) {
-    //         std::cout << val << " ";
-    //     }
-    //     std::cout << std::endl;
-    // }
+    //Test 2: Multiplying with canonical basis vector
+     for (int i = 0; i < matrixCOO.getNumberOfColumns(); ++i) {
+        std::vector<double> basisVector(matrixCOO.getNumberOfColumns(), 0);
+        basisVector[i] = 1; // Creating the i-th canonical basis vector
+        std::vector<double> column = matrixCOO.matrixVectorProduct(basisVector);
+        std::cout << "Column " << i << ": ";
+        for (auto val : column) {
+            std::cout << val << " ";
+        }
+        std::cout << std::endl;
+    }
 
     // Additional tests
     // Get the number of non-zero elements
@@ -52,7 +52,7 @@ int main() {
 
     //Given a vector v, compute the product of the matrix with the vector
     std::vector<double> vec = {1, 2, 3, 4, 5};
-    std::vector<double> result = matrixCSR.matrixVectorProduct(vec);
+    std::vector<double> result = matrixCOO.matrixVectorProduct(vec);
     std::cout << "Matrix-vector product: ";
     for (auto val : result) {
         std::cout << val << " ";
@@ -60,10 +60,7 @@ int main() {
     std::cout << std::endl;
 
     //print the matrix in a human-readable format
-    matrixCSR.printMatrix();
-
-
-
+    matrixCOO.printMatrix();
 
     return 0;
 }
