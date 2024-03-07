@@ -1,0 +1,4 @@
+/Users/andrea.buscema/Desktop/ap_exam/andrea/SIM1/project/CMakeFiles/matrix_app.dir
+/Users/andrea.buscema/Desktop/ap_exam/andrea/SIM1/project/CMakeFiles/matrixlib.dir
+/Users/andrea.buscema/Desktop/ap_exam/andrea/SIM1/project/CMakeFiles/edit_cache.dir
+/Users/andrea.buscema/Desktop/ap_exam/andrea/SIM1/project/CMakeFiles/rebuild_cache.dir

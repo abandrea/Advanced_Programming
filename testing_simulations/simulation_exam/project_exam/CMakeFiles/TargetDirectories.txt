@@ -1,0 +1,3 @@
+/Users/andrea.buscema/Desktop/adv_prog/EXAM/project_exam/CMakeFiles/Optimization_Solver.dir
+/Users/andrea.buscema/Desktop/adv_prog/EXAM/project_exam/CMakeFiles/edit_cache.dir
+/Users/andrea.buscema/Desktop/adv_prog/EXAM/project_exam/CMakeFiles/rebuild_cache.dir
